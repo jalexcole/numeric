@@ -9,10 +9,12 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    jcenter()
+
 }
 
 dependencies {
-//    implementation 'org.junit.jupiter:junit-jupiter:4.13'
+    implementation 'org.junit.jupiter:junit-jupiter:4.13'
 }
 
 kotlin {
@@ -24,6 +26,7 @@ kotlin {
         //    useJUnitPlatform()
         //}
     }
+    /*
     js(LEGACY) {
         browser {
             testTask {
@@ -34,6 +37,8 @@ kotlin {
             }
         }
     }
+    */
+
     /*
     def hostOs = System.getProperty("os.name")
     def isMingwX64 = hostOs.startsWith("Windows")

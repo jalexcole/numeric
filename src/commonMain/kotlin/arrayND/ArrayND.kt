@@ -1,4 +1,4 @@
-package numeric
+package arrayND
 
 class ArrayND  {
     var nDimensionalArray: ArrayList<Double> = arrayListOf()
@@ -13,6 +13,11 @@ class ArrayND  {
         nDimensionalArray = arrayListOf(*ndArray)
         shape = arrayOf(ndArray.size)
 
+    }
+
+    constructor(ndArray: ArrayList<Double>){
+        nDimensionalArray = ndArray
+        shape = arrayOf(ndArray.size)
     }
 
     private fun whatIsTheShape(): Array<Int> {
@@ -32,9 +37,8 @@ class ArrayND  {
         }
     }
 
-    operator fun plus(other: ArrayND){
-        add(other)
-    }
+    operator fun plus(other: ArrayND) = add(other)
+
 
     fun print(){
         TODO("Work in more than one dimension")
@@ -47,25 +51,18 @@ class ArrayND  {
 }
 
 fun ArrayND.sum(): ArrayND {
+    /**
+     * Sum
+     *
+     * Takes the sum of every element in the array
+     */
     var sum = 0.0;
     for (i in nDimensionalArray) {
         sum += i
     }
-
     return ArrayND(arrayOf(sum), arrayOf(1))
 }
 
-fun arrange(count: Int){
 
-}
-
-
-fun array(array: Array<Double>): ArrayND {
-    return ArrayND(array, arrayOf(array.size))
-}
-
-fun linspace(start: Double, stop: Double, steps: Int){
-
-}
 
 
