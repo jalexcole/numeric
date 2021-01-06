@@ -1,49 +1,67 @@
-
+package numeric
 
 class ArrayND  {
     var nDimensionalArray: ArrayList<Double> = arrayListOf()
-    var dimensionalInfo = arrayOf<Int>()
+    private var shape = arrayOf<Int>()
 
     constructor (ndArray: Array<Double>, shape: Array<Int>){
         nDimensionalArray = arrayListOf(*ndArray)
-        dimensionalInfo = shape
-    }
-    fun array(array: Array<Double>){
-        nDimensionalArray = arrayListOf<Double>(*array)
-        dimensionalInfo = arrayOf(array.size)
+        this.shape = shape
     }
 
-    fun shape(): Array<Int> {
-        return dimensionalInfo
+    constructor(ndArray: Array<Double>) {
+        nDimensionalArray = arrayListOf(*ndArray)
+        shape = arrayOf(ndArray.size)
+
     }
 
-    fun setShape(array: Array<Int>){
-        dimensionalInfo = array
-    }
-
-    fun setA(array: Array<Double>){
-        nDimensionalArray = arrayListOf<Double>(*array)
+    private fun whatIsTheShape(): Array<Int> {
+        return shape
     }
 
     fun add(b: ArrayND): ArrayND {
-        if (dimensionalInfo == b.shape()){
-            val x = arrayOf<Double>()
-            for(i in nDimensionalArray.indices){
-                x[i] = nDimensionalArray[i] + b.nDimensionalArray[i]
+        if (shape.contentEquals(b.whatIsTheShape())){
+            val x = arrayListOf<Double>()
+            for(i in  0 until nDimensionalArray.size){
+                x.add(nDimensionalArray[i] + b.nDimensionalArray[i])
             }
-            return ArrayND(x, dimensionalInfo)
+            return ArrayND(x.toTypedArray(), shape)
         }
         else {
             return ArrayND(arrayOf<Double>(), arrayOf<Int>())
         }
     }
 
-    operator fun plus(b: ArrayND){
-        add(b)
+    operator fun plus(other: ArrayND){
+        add(other)
     }
 
+    fun print(){
+        TODO("Work in more than one dimension")
+        print("[")
+        for(i in nDimensionalArray) {
+            print("$i ")
+        }
+        print("]")
+    }
+}
+
+fun ArrayND.sum(): ArrayND {
+    var sum = 0.0;
+    for (i in nDimensionalArray) {
+        sum += i
+    }
+
+    return ArrayND(arrayOf(sum), arrayOf(1))
+}
+
+fun arrange(count: Int){
+
+}
 
 
+fun array(array: Array<Double>): ArrayND {
+    return ArrayND(array, arrayOf(array.size))
 }
 
 fun linspace(start: Double, stop: Double, steps: Int){
