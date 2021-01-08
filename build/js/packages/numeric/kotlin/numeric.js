@@ -16,6 +16,7 @@
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   var copyToArray = Kotlin.kotlin.collections.copyToArray;
   var NotImplementedError_init = Kotlin.kotlin.NotImplementedError;
+  var Math_0 = Math;
   function ArrayND() {
     this.nDimensionalArray = ArrayList_init();
     this.shape_0 = [];
@@ -61,6 +62,13 @@
     $this.shape_0 = [ndArray.length];
     return $this;
   }
+  function ArrayND_init_1(ndArray, $this) {
+    $this = $this || Object.create(ArrayND.prototype);
+    ArrayND.call($this);
+    $this.nDimensionalArray = ndArray;
+    $this.shape_0 = [ndArray.size];
+    return $this;
+  }
   function sum($receiver) {
     var tmp$;
     var sum = 0.0;
@@ -72,27 +80,40 @@
     return ArrayND_init([sum], [1]);
   }
   function aRangeOf(count) {
+    var x = ArrayList_init();
+    for (var i = 0; i <= count; i++) {
+      x.add_11rb$(i);
+    }
+    return ArrayND_init_1(x);
   }
-  function array(array) {
+  function arrayND(array) {
     return ArrayND_init(array, [array.length]);
   }
-  function arrayList(arrayList) {
+  function arrayND_0(arrayList) {
+    return ArrayND_init_1(arrayList);
   }
   function linspace(start, stop, steps) {
   }
   function exp(array) {
+    var tmp$;
+    var x = ArrayList_init();
+    for (tmp$ = 0; tmp$ !== array.length; ++tmp$) {
+      var i = array[tmp$];
+      x.add_11rb$(Math_0.exp(i));
+    }
+    return ArrayND_init_1(x);
   }
   var package$arrayND = _.arrayND || (_.arrayND = {});
   package$arrayND.ArrayND_init_eac3mw$ = ArrayND_init;
   package$arrayND.ArrayND_init_awc180$ = ArrayND_init_0;
+  package$arrayND.ArrayND_init_l8u4bv$ = ArrayND_init_1;
   package$arrayND.ArrayND = ArrayND;
   package$arrayND.sum_mas50h$ = sum;
-  var package$numk = _.numk || (_.numk = {});
-  package$numk.aRangeOf_za3lpa$ = aRangeOf;
-  package$numk.array_awc180$ = array;
-  package$numk.arrayList_l8u4bv$ = arrayList;
-  package$numk.linspace_syxxoe$ = linspace;
-  package$numk.exp_awc180$ = exp;
+  package$arrayND.aRangeOf_za3lpa$ = aRangeOf;
+  package$arrayND.arrayND_awc180$ = arrayND;
+  package$arrayND.arrayND_l8u4bv$ = arrayND_0;
+  package$arrayND.linspace_syxxoe$ = linspace;
+  package$arrayND.exp_awc180$ = exp;
   Kotlin.defineModule('numeric', _);
   return _;
 }));

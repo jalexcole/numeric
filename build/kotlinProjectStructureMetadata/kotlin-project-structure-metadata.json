@@ -4,6 +4,18 @@
     "isPublishedAsRoot": "true",
     "variants": [
       {
+        "name": "jsApiElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      },
+      {
+        "name": "jsRuntimeElements",
+        "sourceSet": [
+          "commonMain"
+        ]
+      },
+      {
         "name": "jvmApiElements",
         "sourceSet": [
           "commonMain"
@@ -14,6 +26,12 @@
         "sourceSet": [
           "commonMain"
         ]
+      },
+      {
+        "name": "nativeApiElements",
+        "sourceSet": [
+          "commonMain"
+        ]
       }
     ],
     "sourceSets": [
@@ -21,7 +39,7 @@
         "name": "commonMain",
         "dependsOn": [],
         "moduleDependency": [
-          "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+          "org.jetbrains.kotlin:kotlin-stdlib-common"
         ],
         "binaryLayout": "klib"
       }

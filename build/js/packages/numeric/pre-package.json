@@ -4,9 +4,9 @@
     "dukat": "0.5.8-rc.3"
   },
   "dependencies": {
-    "kotlin": "file:/Users/alex/IdeaProjects/numeric/build/js/packages_imported/kotlin/1.4.21",
-    "kotlin-test-js-runner": "file:/Users/alex/IdeaProjects/numeric/build/js/packages_imported/kotlin-test-js-runner/1.4.21",
-    "kotlin-test": "file:/Users/alex/IdeaProjects/numeric/build/js/packages_imported/kotlin-test/1.4.21"
+    "kotlin": "file:/home/alex/IdeaProjects/numeric/build/js/packages_imported/kotlin/1.4.21",
+    "kotlin-test-js-runner": "file:/home/alex/IdeaProjects/numeric/build/js/packages_imported/kotlin-test-js-runner/1.4.21",
+    "kotlin-test": "file:/home/alex/IdeaProjects/numeric/build/js/packages_imported/kotlin-test/1.4.21"
   },
   "peerDependencies": {},
   "optionalDependencies": {},
