@@ -40,7 +40,10 @@ class ArrayND  {
     }
 
     operator fun plus(other: ArrayND) = add(other)
-
+    
+    override fun toString(): String {
+        return TODO("toString() not implemented")
+    }
 
     fun print(){
         TODO("Work in more than one dimension")
@@ -67,7 +70,7 @@ fun ArrayND.sum(): ArrayND {
     for (i in nDimensionalArray) {
         sum += i
     }
-    return ArrayND(arrayOf(sum), arrayOf(1))
+    return ArrayND(arrayOf(sum))
 }
 
 
