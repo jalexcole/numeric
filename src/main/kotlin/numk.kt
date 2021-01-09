@@ -1,10 +1,11 @@
 
 
-import ArrayND
+
+import arrayND.ArrayND
 import kotlin.*
 import kotlin.math.exp
 
-fun aRangeOf(count: Int): ArrayND{
+fun aRangeOf(count: Int): ArrayND {
     val x: ArrayList<Double> = ArrayList()
     for(i in 0..count){
         x.add(i.toDouble())
@@ -21,7 +22,19 @@ fun arrayND(arrayList: ArrayList<Double>): ArrayND {
     return ArrayND(arrayList)
 }
 
-fun linspace(start: Double, stop: Double, steps: Int) {
+fun linspace(start: Double, stop: Double, steps: Int=50) {
+
+}
+
+fun zeros(size: Int): ArrayND {
+    val newArray = arrayListOf<Double>()
+    for (i in 0 until size) {
+        newArray.add(0.0)
+    }
+    return ArrayND(newArray.toTypedArray(), arrayOf(size))
+}
+
+fun zeros(sizeA: Array<Int>){
 
 }
 
