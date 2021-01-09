@@ -1,6 +1,9 @@
 package arrayND
 
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.pow
+
 
 
 open class ArrayND  {
@@ -27,24 +30,37 @@ open class ArrayND  {
         shape = arrayOf(ndArray.size)
     }
 
-    private fun whatIsTheShape(): Array<Int> {
+    fun getShapeInternal(): Array<Int> {
         return shape
     }
     
-    fun reshape(newShape: Array<Int>){
+    fun stringShape(): String {
+        var x:String = ""
+        for (i in 0 until shape.size) {
+            x.plus(i)
+            if(i != shape.size) x.plus(", ")
+        }
+        return x
+    }
+    
+    fun reshape(newShape: Array<Int>): ArrayND {
         var count = 1
         for (i in newShape) {
             count *= i
         }
         if (count == nDimensionalArray.size) {
             shape = newShape
+            return ArrayND(nDimensionalArray.toTypedArray(), newShape)
         } else {
-            print("New shape does not meet ArrayND size")
+            print("ValueError: cannot reshape array of size ${nDimensionalArray.size} into shape ${Arrays.toString(shape)}")
+            return  ArrayND()
         }
+        
+        
     }
     
     private fun add(b: ArrayND): ArrayND {
-        if (shape.contentEquals(b.whatIsTheShape())){
+        if (shape.contentEquals(b.getShapeInternal())){
             val x = arrayListOf<Double>()
             for(i in  0 until nDimensionalArray.size){
                 x.add(nDimensionalArray[i] + b.nDimensionalArray[i])
@@ -77,9 +93,10 @@ open class ArrayND  {
             2 -> {
                 print("[")
                 for(column in 0 until shape[0]) {
+                    if (column != 0) print(" ")
                     print("[")
                     for(row in 0 until shape[1]) {
-                        val index = row * column + row
+                        val index = shape[0] * column + row
                         print(nDimensionalArray[index])
                         if (row != shape[1] - 1) print(", ")
                     }

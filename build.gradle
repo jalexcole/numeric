@@ -18,11 +18,3 @@ dependencies {
 test {
     useJUnit()
 }
-
-compileKotlin {
-    kotlinOptions.jvmTarget = '15'
-}
-
-compileTestKotlin {
-    kotlinOptions.jvmTarget = '13'
-}
