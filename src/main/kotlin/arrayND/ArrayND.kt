@@ -125,7 +125,7 @@ open class ArrayND {
     }
   }
   
-  operator fun plus(other: ArrayND) C= add(other)
+  operator fun plus(other: ArrayND) = add(other)
   
   operator fun plus(other: Double): ArrayND {
     val x = arrayListOf<Double>()
