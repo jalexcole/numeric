@@ -7,7 +7,7 @@ import kotlin.math.exp
 
 fun aRangeOf(count: Int): ArrayND {
     val x: ArrayList<Double> = ArrayList()
-    for(i in 0..count){
+    for(i in 0 until count){
         x.add(i.toDouble())
     }
     return ArrayND(x)
