@@ -39,7 +39,7 @@ internal class ArrayNDTest {
     val threeDimensionTest = test3D[2,3,2].single()
     
     assertEquals(oneDExpected, oneDTest)
-    assertEquals(twoDimensionExpected, threeDimensionTest)
+    assertEquals(twoDimensionExpected, twoDimensionTest)
     assertEquals(threeDimensionExpected, threeDimensionTest)
   }
   
@@ -49,7 +49,7 @@ internal class ArrayNDTest {
     
     
     val testSubject = test2D
-    testSubject[3, 5] = 14.0
+    testSubject[3, 5] = expectedValue
     
     assertEquals(expectedValue, testSubject[3, 5].single())
     
