@@ -3,10 +3,10 @@ package arrayND
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.pow
-
+import kotlin.math.sqrt
 
 open class ArrayND {
-  var dataND: ArrayList<Double> = arrayListOf()
+  var dataND: DoubleArray = doubleArrayOf()
   var shape: Array<Int> = arrayOf<Int>()
   var size: Int = dataND.size
   
@@ -15,17 +15,17 @@ open class ArrayND {
   }
   
   constructor (ndArray: Array<Double>, shape: Array<Int>) {
-    dataND = arrayListOf(*ndArray)
+    dataND = ndArray.toDoubleArray()
     this.shape = shape
   }
   
   constructor(ndArray: Array<Double>) {
-    dataND = arrayListOf(*ndArray)
+    dataND = ndArray.toDoubleArray()
     shape = arrayOf(ndArray.size)
   }
   
   constructor(ndArray: ArrayList<Double>) {
-    dataND = ndArray
+    dataND = ndArray.toDoubleArray()
     shape = arrayOf(ndArray.size)
   }
   
@@ -191,17 +191,16 @@ fun ArrayND.pow(value: Double): ArrayND {
   val newList = arrayListOf<Double>()
   val newShape = shape
   for (i in 0 until dataND.size) {
-    newList.add(dataND[i])
+    newList.add(dataND[i].pow(value))
   }
   return ArrayND(newList.toTypedArray(), newShape)
 }
 
-fun ArrayND.sqrt(value: Double): ArrayND {
+fun ArrayND.sqrt(): ArrayND {
   val newList = arrayListOf<Double>()
   val newShape = shape
-  
-  for (i in 0 until dataND.size) {
-    newList.add(dataND[i].pow(2.0))
+  for (i in dataND) {
+    newList.add(sqrt(i))
   }
   return ArrayND(newList.toTypedArray(), newShape)
 }
