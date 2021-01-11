@@ -13,17 +13,23 @@ fun aRangeOf(count: Int): ArrayND {
     return ArrayND(x)
 }
 
+fun arrayNDOf(vararg array: Double): ArrayND {
+    return ArrayND(array.toTypedArray())
+}
 
-fun arrayND(array: Array<Double>): ArrayND {
+fun arrayNDOf(array: Array<Double>): ArrayND {
     return ArrayND(array, arrayOf(array.size))
 }
 
-fun arrayND(arrayList: ArrayList<Double>): ArrayND {
-    return ArrayND(arrayList)
-}
-
-fun linspace(start: Double, stop: Double, steps: Int=50) {
-
+fun linspace(start: Double, stop: Double, steps: Int=50): ArrayND {
+    val stepSize = (stop - start) / (steps.toDouble() - 1)
+    val linspaceArray = arrayListOf<Double>()
+    
+    linspaceArray.add(start)
+    for (i in 1 until steps) {
+        linspaceArray.add(start + stepSize * i)
+    }
+    return ArrayND(linspaceArray.toTypedArray())
 }
 
 fun zeros(size: Int): ArrayND {
@@ -36,12 +42,4 @@ fun zeros(size: Int): ArrayND {
 
 fun zeros(sizeA: Array<Int>){
 
-}
-
-fun exp(array: Array<Double>): ArrayND {
-    val x = ArrayList<Double>()
-    for(i in array){
-        x.add(exp(i))
-    }
-    return ArrayND(x)
 }
