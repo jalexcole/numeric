@@ -1,12 +1,12 @@
 package arrayND
 
+import polynomial.Polynomial
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 open class ArrayND {
-  var dataElements: Array<Double> = arrayOf()
+  open var dataElements: Array<Double> = arrayOf()
   var shape: Array<Int> = arrayOf<Int>()
   var size: Int = dataElements.size
   
@@ -118,19 +118,19 @@ open class ArrayND {
       }
        return ArrayND(x.toTypedArray(), shape)
       
-    } else if(isScaler()) {
+    } else if(isScalar()) {
       for (i in 0 until other.size) {
         x += dataElements.single() + other.dataElements[i]
       }
       return ArrayND(x.toTypedArray(), other.shape)
       
-    } else if(other.isScaler()) {
+    } else if(other.isScalar()) {
       for (i in 0 until size){
         x.add(dataElements[i] + other.single())
       }
       return ArrayND()
     }
-    error("operator plus: nonconformant arguments")
+    error("operator plus: nonconforming arguments")
   }
   
   operator fun plus(other: ArrayND) = add(other)
@@ -141,6 +141,40 @@ open class ArrayND {
       x.add(i + other)
     }
     
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun minus(other: ArrayND): ArrayND {
+    val x = arrayListOf<Double>()
+  
+    if (shape.contentEquals(other.getShape())) {
+      for (i in 0 until size) {
+        x.add(dataElements[i] - other.dataElements[i])
+      }
+      return ArrayND(x.toTypedArray(), shape)
+    
+    } else if(isScalar()) {
+      for (i in 0 until other.size) {
+        x += dataElements.single() - other.dataElements[i]
+      }
+      return ArrayND(x.toTypedArray(), other.shape)
+    
+    } else if(other.isScalar()) {
+      for (i in 0 until size){
+        x.add(dataElements[i] - other.single())
+      }
+      return ArrayND()
+    }
+    error("operator minus: nonconforming arguments")
+  }
+  
+  
+  operator fun minus(other: Double): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i - other)
+    }
+  
     return ArrayND(x.toTypedArray(), this.shape)
   }
   
@@ -188,7 +222,12 @@ open class ArrayND {
     }
   }
   
-  private fun isScaler(): Boolean {
+  fun toPolynomial(): Polynomial {
+    if (shape.size == 1) return Polynomial(dataElements)
+    error("ShapeError: Array is a ${shape.size} dimension array")
+  }
+  
+  fun isScalar(): Boolean {
     for(i in shape) {
       if (i != 1) return false
     }
