@@ -130,7 +130,7 @@ open class ArrayND {
       }
       return ArrayND()
     }
-    error("operator plus: nonconformant arguments")
+    error("operator plus: nonconforming arguments")
   }
   
   operator fun plus(other: ArrayND) = add(other)
@@ -141,6 +141,40 @@ open class ArrayND {
       x.add(i + other)
     }
     
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun minus(other: ArrayND): ArrayND {
+    val x = arrayListOf<Double>()
+  
+    if (shape.contentEquals(other.getShape())) {
+      for (i in 0 until size) {
+        x.add(dataElements[i] - other.dataElements[i])
+      }
+      return ArrayND(x.toTypedArray(), shape)
+    
+    } else if(isScaler()) {
+      for (i in 0 until other.size) {
+        x += dataElements.single() - other.dataElements[i]
+      }
+      return ArrayND(x.toTypedArray(), other.shape)
+    
+    } else if(other.isScaler()) {
+      for (i in 0 until size){
+        x.add(dataElements[i] - other.single())
+      }
+      return ArrayND()
+    }
+    error("operator minus: nonconforming arguments")
+  }
+  
+  
+  operator fun minus(other: Double): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i - other)
+    }
+  
     return ArrayND(x.toTypedArray(), this.shape)
   }
   
