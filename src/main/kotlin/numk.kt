@@ -2,8 +2,8 @@
 
 
 import arrayND.ArrayND
+import java.util.*
 import kotlin.*
-import kotlin.math.exp
 
 fun aRangeOf(count: Int): ArrayND {
     val x: ArrayList<Double> = ArrayList()
@@ -38,8 +38,4 @@ fun zeros(size: Int): ArrayND {
         newArray.add(0.0)
     }
     return ArrayND(newArray.toTypedArray(), arrayOf(size))
-}
-
-fun zeros(sizeA: Array<Int>){
-
 }

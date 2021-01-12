@@ -8,11 +8,7 @@ import kotlin.math.sqrt
 open class ArrayND {
   open var dataElements: Array<Double> = arrayOf()
   var shape: Array<Int> = arrayOf<Int>()
-  var size: Int = dataElements.size
-  
-  constructor() {
-    
-  }
+  open var size: Int = dataElements.size
   
   constructor (ndArray: Array<Double>, shape: Array<Int>) {
     dataElements = ndArray
@@ -128,7 +124,7 @@ open class ArrayND {
       for (i in 0 until size){
         x.add(dataElements[i] + other.single())
       }
-      return ArrayND()
+      return ArrayND(x.toTypedArray())
     }
     error("operator plus: nonconforming arguments")
   }
@@ -144,10 +140,19 @@ open class ArrayND {
     return ArrayND(x.toTypedArray(), this.shape)
   }
   
+  operator fun plus(other: Int): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i + other)
+    }
+    
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
   operator fun minus(other: ArrayND): ArrayND {
     val x = arrayListOf<Double>()
   
-    if (shape.contentEquals(other.getShape())) {
+    if (shape.contentEquals(other.shape)) {
       for (i in 0 until size) {
         x.add(dataElements[i] - other.dataElements[i])
       }
@@ -163,11 +168,18 @@ open class ArrayND {
       for (i in 0 until size){
         x.add(dataElements[i] - other.single())
       }
-      return ArrayND()
+      return ArrayND(x.toTypedArray())
     }
     error("operator minus: nonconforming arguments")
   }
-  
+  operator fun minus(other: Int): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i - other)
+    }
+    
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
   
   operator fun minus(other: Double): ArrayND {
     val x = arrayListOf<Double>()
@@ -184,6 +196,89 @@ open class ArrayND {
       x.add(i * -1)
     }
     return ArrayND(x.toTypedArray(), this.shape)
+  }
+  operator fun times(other: Double): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i * other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun times(other: Int): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i * other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun times(other: ArrayND): ArrayND {
+    val x = arrayListOf<Double>()
+  
+    if (shape.contentEquals(other.getShape())) {
+      for (i in 0 until size) {
+        x.add(dataElements[i] * other.dataElements[i])
+      }
+      return ArrayND(x.toTypedArray(), shape)
+    
+    } else if(isScalar()) {
+      for (i in 0 until other.size) {
+        x += dataElements.single() * other.dataElements[i]
+      }
+      return ArrayND(x.toTypedArray(), other.shape)
+    
+    } else if(other.isScalar()) {
+      for (i in 0 until size){
+        x.add(dataElements[i] * other.single())
+      }
+      return ArrayND(x.toTypedArray())
+    }
+    error("operator *: nonconforming arguments")
+  }
+  
+  operator fun div(other: Double): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i / other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator  fun div(other: Int): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i / other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun div(other: ArrayND): ArrayND {
+    val x = arrayListOf<Double>()
+  
+    if (shape.contentEquals(other.getShape())) {
+      for (i in 0 until size) {
+        x.add(dataElements[i] / other.dataElements[i])
+      }
+      return ArrayND(x.toTypedArray(), shape)
+    
+    } else if(isScalar()) {
+      for (i in 0 until other.size) {
+        x += dataElements.single() / other.dataElements[i]
+      }
+      return ArrayND(x.toTypedArray(), other.shape)
+    
+    } else if(other.isScalar()) {
+      for (i in 0 until size){
+        x.add(dataElements[i] / other.single())
+      }
+      return ArrayND(x.toTypedArray())
+    }
+    error("operator /: nonconforming arguments")
+  }
+  
+  open fun equals(other: ArrayND): Boolean {
+    return dataElements.contentEquals(other.dataElements) && shape.contentEquals(other.shape)
   }
   
   fun print() {
@@ -234,6 +329,13 @@ open class ArrayND {
     return true
   }
   
+  fun isVector(): Boolean {
+    return (shape.size == 1)
+  }
+  
+  fun isEmpty(): Boolean {
+    return (shape.size == 0)
+  }
   
 }
 
@@ -266,12 +368,4 @@ fun ArrayND.sqrt(): ArrayND {
     newList.add(sqrt(i))
   }
   return ArrayND(newList.toTypedArray(), newShape)
-}
-
-fun ArrayND.exp(array: Array<Double>): ArrayND {
-  val x = ArrayList<Double>()
-  for(i in array){
-    x.add(kotlin.math.exp(i))
-  }
-  return ArrayND(x)
 }
