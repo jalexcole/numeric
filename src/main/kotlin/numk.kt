@@ -21,6 +21,8 @@ fun arrayNDOf(array: Array<Double>): ArrayND {
     return ArrayND(array, arrayOf(array.size))
 }
 
+fun arrayNDOf(): ArrayND = ArrayND(arrayOf(), arrayOf())
+
 fun linspace(start: Double, stop: Double, steps: Int=50): ArrayND {
     val stepSize = (stop - start) / (steps.toDouble() - 1)
     val linspaceArray = arrayListOf<Double>()

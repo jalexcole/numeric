@@ -7,12 +7,10 @@ import kotlin.math.pow
 /**
  * Polynomial is a convenience class for handling polynomial functions
  */
-class Polynomial(elements: Array<Double>){
-  var dataElements = elements
-  var size = dataElements.size
+class Polynomial(ndArray: Array<Double>): ArrayND(ndArray) {
 
   private fun polynomialResult(value: Double): Double {
-    var sum = 0.0
+    var sum: Double = 0.0
     for (i in 0 until size) {
       sum += dataElements[i] * value.pow(i.toDouble())
     }
@@ -26,8 +24,6 @@ class Polynomial(elements: Array<Double>){
     }
     return ArrayND(polyDerivative.toTypedArray())
   }
-  
-  
   
   operator fun invoke(value: Double): ArrayND {
     return ArrayND(arrayOf(polynomialResult(value)))
