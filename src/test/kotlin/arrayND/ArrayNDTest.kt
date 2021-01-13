@@ -5,6 +5,8 @@ import arrayNDOf
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.fail
+import java.util.*
 
 internal class ArrayNDTest {
   private val testValue = 64
@@ -14,21 +16,29 @@ internal class ArrayNDTest {
   
   @Test
   fun reshape() {
-    val expectedReshape = aRangeOf(64)
-    val actualReshape = test2D.reshape(arrayOf(8,8))
-    assertEquals(expectedReshape, actualReshape)
+    val expected = aRangeOf(64)
+    val actual = test2D.reshape(arrayOf(64))
+    val failMessage = "Array did not reshape. Expected array size: ${Arrays.toString(expected.getShape())} not " +
+            "${Arrays.toString(actual.getShape())}"
+    assertTrue(expected.getShape().contentEquals(actual.getShape()), failMessage)
+    
   }
   
   @Test
   fun plus() {
-    val expectedValue = arrayNDOf(2.0, 4.0, 6.0)
-    val actualValue = arrayNDOf(1.0, 2.0, 3.0) + arrayNDOf(1.0, 2.0, 3.0)
+    val expected = arrayNDOf(2.0, 4.0, 6.0)
+    val actual = arrayNDOf(1.0, 2.0, 3.0) + arrayNDOf(1.0, 2.0, 3.0)
+  
+    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
+            "${Arrays.toString(actual.dataElements)}"
     
-    assertTrue(expectedValue.equals(actualValue))
+    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
+            && expected.shape.contentEquals(actual.shape), failMessage)
   }
   
   @Test
   fun print() {
+    // fail("Print() test is not implemented")
   }
   
   @Test
@@ -77,7 +87,11 @@ internal class ArrayNDTest {
     val expected = arrayNDOf(0.0, 0.0, 0.0)
     val actual = arrayNDOf(1.0, 2.0, 3.0) - arrayNDOf(1.0, 2.0, 3.0)
   
-    assertTrue(expected.dataElements == actual.dataElements && expected.shape == actual.shape)
+    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
+            "${Arrays.toString(actual.dataElements)}"
+  
+    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
+            && expected.shape.contentEquals(actual.shape), failMessage)
   }
   
   
@@ -86,25 +100,34 @@ internal class ArrayNDTest {
     val expected = arrayNDOf(2.0, 4.0, 6.0)
     val actual = -arrayNDOf(-2.0, -4.0, -6.0)
   
-    assertTrue(expected.dataElements == actual.dataElements
-            && expected.shape == actual.shape)
+    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
+            "${Arrays.toString(actual.dataElements)}"
+    
+    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
+            && expected.shape.contentEquals(actual.shape), failMessage)
   }
   
   @Test
   fun times() {
     val expected = arrayNDOf(1.0, 4.0, 9.0)
     val actual = arrayNDOf(1.0, 2.0, 3.0) * arrayNDOf(1.0, 2.0, 3.0)
+  
+    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
+            "${Arrays.toString(actual.dataElements)}"
     
-    assertTrue(expected.dataElements == actual.dataElements && expected.shape == actual.shape)
+    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
+            && expected.shape.contentEquals(actual.shape), failMessage)
   }
   
   
   @Test
   fun div() {
     val expected = arrayNDOf(1.0, 1.0, 1.0)
-    val actual = arrayNDOf(1.0, 2.0, 3.0) / arrayNDOf(1.0, 2.0, 3.0)
-  
-    assertTrue(expected.dataElements == actual.dataElements && expected.shape == actual.shape)
+    val actual = arrayNDOf(1.0, 2.0, 3.0) / (arrayNDOf(1.0, 2.0, 3.0))
+    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
+            "${Arrays.toString(actual.dataElements)}"
+    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
+            && expected.shape.contentEquals(actual.shape), failMessage)
   }
   
   
@@ -121,8 +144,8 @@ internal class ArrayNDTest {
   
   @Test
   fun isScalar() {
-    val expectedTrue = arrayNDOf(6.022e23)
-    val expectedFalse = arrayNDOf(1.0, 2.0)
+    val expectedTrue = arrayNDOf(6.022e23).isScalar()
+    val expectedFalse = arrayNDOf(1.0, 2.0).isScalar()
     
     assertEquals(expectedTrue, true)
     assertEquals(expectedFalse, false)
@@ -130,8 +153,8 @@ internal class ArrayNDTest {
   
   @Test
   fun isVector() {
-    val expectedFalse = arrayNDOf(6.022e23)
-    val expectedTrue = arrayNDOf(1.0, 2.0)
+    val expectedFalse = aRangeOf(20).reshape(4, 5).isVector()
+    val expectedTrue = arrayNDOf(1.0, 2.0).isVector()
   
     assertEquals(expectedTrue, true)
     assertEquals(expectedFalse, false)
@@ -139,11 +162,13 @@ internal class ArrayNDTest {
   
   @Test
   fun isEmpty() {
-    val expectedFalse1 = arrayNDOf(6.022e23)
-    val expectedFalse2 = arrayNDOf(1.0, 2.0)
-    val expectedTrue = arrayNDOf()
+    val expectedFalse1 = arrayNDOf(6.022e23).isEmpty()
+    val expectedFalse2 = arrayNDOf(1.0, 2.0).isEmpty()
+    val expectedTrue = arrayNDOf().isEmpty()
+    
     assertEquals(expectedTrue, true)
     assertEquals(expectedFalse1, false)
     assertEquals(expectedFalse2, false)
   }
+  
 }

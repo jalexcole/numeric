@@ -1,9 +1,15 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.21'
+    id 'java-library'
+    id 'maven-publish'
 }
 
 group = 'me.alex'
-version = '0.1'
+version = '0.0.1'
+
+java {
+    withJavadocJar()
+}
 
 repositories {
     mavenCentral()
@@ -11,10 +17,32 @@ repositories {
 
 dependencies {
     implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
-    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+    testRuntime("org.junit.jupiter:junit-jupiter:5.4.2")
+
+    // Use the Kotlin test library.
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+
+    // Use the Kotlin JUnit integration.
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
 }
 
 test {
-    useJUnit()
+    // useJUnit()
+    useJUnitPlatform()
+    test.getStandardOutputCapture()
 }
+
+//publishing {
+//    publications {
+//        myLibrary(MavenPublication) {
+//            from components
+//        }
+//    }
+//
+//    repositories {
+//        maven {
+//            name = 'numeric'
+//            url = "file://${buildDir}/repo"
+//        }
+//    }
+//}

@@ -98,12 +98,25 @@ open class ArrayND {
       count *= i
     }
     if (count == dataElements.size) {
-      shape = newShape
       return ArrayND(dataElements, newShape)
     } else {
       error("ValueError: cannot reshape array of size ${dataElements.size} into shape ${Arrays.toString(shape)}")
     }
   }
+  
+  fun reshape(vararg newShape: Int): ArrayND {
+    var count = 1
+    for (i in newShape) {
+      count *= i
+    }
+    if (count == dataElements.size) {
+      return ArrayND(dataElements, newShape.toTypedArray())
+    } else {
+      error("ValueError: cannot reshape array of size ${dataElements.size} into shape ${Arrays.toString(shape)}")
+    }
+  }
+  
+  
   
   private fun add(other: ArrayND): ArrayND {
     val x = arrayListOf<Double>()
@@ -369,3 +382,4 @@ fun ArrayND.sqrt(): ArrayND {
   }
   return ArrayND(newList.toTypedArray(), newShape)
 }
+
