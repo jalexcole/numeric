@@ -34,6 +34,10 @@ fun linspace(start: Double, stop: Double, steps: Int=50): ArrayND {
     return ArrayND(linspaceArray.toTypedArray())
 }
 
+fun randomND(vararg args: Int) {
+
+}
+
 fun zeros(size: Int): ArrayND {
     val newArray = arrayListOf<Double>()
     for (i in 0 until size) {

@@ -28,21 +28,7 @@ dependencies {
 
 test {
     // useJUnit()
-    useJUnitPlatform()
+    useJUnitPlatform() // works for junit 5
     test.getStandardOutputCapture()
 }
 
-//publishing {
-//    publications {
-//        myLibrary(MavenPublication) {
-//            from components
-//        }
-//    }
-//
-//    repositories {
-//        maven {
-//            name = 'numeric'
-//            url = "file://${buildDir}/repo"
-//        }
-//    }
-//}
