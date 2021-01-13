@@ -5,8 +5,6 @@ import arrayNDOf
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.fail
-import java.util.*
 
 internal class ArrayNDTest {
   private val testValue = 64
@@ -18,8 +16,8 @@ internal class ArrayNDTest {
   fun reshape() {
     val expected = aRangeOf(64)
     val actual = test2D.reshape(arrayOf(64))
-    val failMessage = "Array did not reshape. Expected array size: ${Arrays.toString(expected.getShape())} not " +
-            "${Arrays.toString(actual.getShape())}"
+    val failMessage = "Array did not reshape. Expected array size: ${expected.getShape().contentToString()} not " +
+            "${actual.getShape().contentToString()}"
     assertTrue(expected.getShape().contentEquals(actual.getShape()), failMessage)
     
   }
@@ -27,17 +25,34 @@ internal class ArrayNDTest {
   @Test
   fun plus() {
     val expected = arrayNDOf(2.0, 4.0, 6.0)
-    val actual = arrayNDOf(1.0, 2.0, 3.0) + arrayNDOf(1.0, 2.0, 3.0)
+    val actualDouble = arrayNDOf(1.0, 3.0, 5.0) + 1.0
+    val actualSingle = arrayNDOf(1.0, 3.0, 5.0) + (arrayNDOf(1.0))
+    val actualVector = arrayNDOf(1.0, 2.0, 3.0) + (arrayNDOf(1.0, 2.0, 3.0))
   
-    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
-            "${Arrays.toString(actual.dataElements)}"
+    val failMessageDouble = "Failure: ArrayND + Double " +
+            "\nExpected vector: ${expected.dataElements.contentToString()} received " +
+            "${actualDouble.dataElements.contentToString()}"
+  
+    val failMessageSingle = "Failure: ArrayND + ArrayND.single()" +
+            "\nExpected vector: ${expected.dataElements.contentToString()} received " +
+            "${actualSingle.dataElements.contentToString()}"
     
-    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
-            && expected.shape.contentEquals(actual.shape), failMessage)
+    val failMessageVector = "Failure: ArrayND + ArrayND" +
+            "\nExpected vector: ${expected.dataElements.contentToString()} received " +
+            "${actualVector.dataElements.contentToString()}"
+  
+    assertTrue(expected.dataElements.contentEquals(actualDouble.dataElements)
+            && expected.shape.contentEquals(actualDouble.shape), failMessageDouble)
+  
+    assertTrue(expected.dataElements.contentEquals(actualSingle.dataElements)
+            && expected.shape.contentEquals(actualSingle.shape), failMessageSingle)
+    
+    assertTrue(expected.dataElements.contentEquals(actualVector.dataElements)
+            && expected.shape.contentEquals(actualVector.shape), failMessageVector)
   }
   
   @Test
-  fun print() {
+  fun contentToString() {
     // fail("Print() test is not implemented")
   }
   
@@ -79,7 +94,7 @@ internal class ArrayNDTest {
   
   @Test
   fun getShape1() {
-    assertEquals(arrayOf(8,8), test2D.getShape())
+    assertTrue(arrayOf(8,8).contentEquals(test2D.getShape()))
   }
   
   @Test
@@ -87,8 +102,8 @@ internal class ArrayNDTest {
     val expected = arrayNDOf(0.0, 0.0, 0.0)
     val actual = arrayNDOf(1.0, 2.0, 3.0) - arrayNDOf(1.0, 2.0, 3.0)
   
-    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
-            "${Arrays.toString(actual.dataElements)}"
+    val failMessage = "Expected vector: ${expected.dataElements.contentToString()} received " +
+            "${actual.dataElements.contentToString()}"
   
     assertTrue(expected.dataElements.contentEquals(actual.dataElements)
             && expected.shape.contentEquals(actual.shape), failMessage)
@@ -100,8 +115,8 @@ internal class ArrayNDTest {
     val expected = arrayNDOf(2.0, 4.0, 6.0)
     val actual = -arrayNDOf(-2.0, -4.0, -6.0)
   
-    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
-            "${Arrays.toString(actual.dataElements)}"
+    val failMessage = "Expected vector: ${expected.dataElements.contentToString()} received " +
+            "${actual.dataElements.contentToString()}"
     
     assertTrue(expected.dataElements.contentEquals(actual.dataElements)
             && expected.shape.contentEquals(actual.shape), failMessage)
@@ -112,8 +127,8 @@ internal class ArrayNDTest {
     val expected = arrayNDOf(1.0, 4.0, 9.0)
     val actual = arrayNDOf(1.0, 2.0, 3.0) * arrayNDOf(1.0, 2.0, 3.0)
   
-    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
-            "${Arrays.toString(actual.dataElements)}"
+    val failMessage = "Expected vector: ${expected.dataElements.contentToString()} received " +
+            "${actual.dataElements.contentToString()}"
     
     assertTrue(expected.dataElements.contentEquals(actual.dataElements)
             && expected.shape.contentEquals(actual.shape), failMessage)
@@ -124,8 +139,8 @@ internal class ArrayNDTest {
   fun div() {
     val expected = arrayNDOf(1.0, 1.0, 1.0)
     val actual = arrayNDOf(1.0, 2.0, 3.0) / (arrayNDOf(1.0, 2.0, 3.0))
-    val failMessage = "Expected vector: ${Arrays.toString(expected.dataElements)} received " +
-            "${Arrays.toString(actual.dataElements)}"
+    val failMessage = "Expected vector: ${expected.dataElements.contentToString()} received " +
+            "${actual.dataElements.contentToString()}"
     assertTrue(expected.dataElements.contentEquals(actual.dataElements)
             && expected.shape.contentEquals(actual.shape), failMessage)
   }
@@ -133,13 +148,22 @@ internal class ArrayNDTest {
   
   @Test
   fun equals() {
+    val a = aRangeOf(2)
+    val b = aRangeOf(2)
+    assertTrue(a.equals(b))
   }
   
   @Test
   fun toPolynomial() {
-    val expected = 17.0
+    val expected = arrayNDOf(17.0)
     var x = arrayNDOf(1.0, 2.0, 3.0).toPolynomial()
-    assertEquals(expected, x(2.0))
+    val actual = x(2.0)
+    val failMessage = "Fail: toPolynomial()" +
+            "\nExpected vector: ${expected.dataElements.contentToString()} received " +
+            "${actual.dataElements.contentToString()}"
+    
+    assertTrue(expected.equals(actual), failMessage)
+    // assertEquals(expected, x(2.0))
   }
   
   @Test

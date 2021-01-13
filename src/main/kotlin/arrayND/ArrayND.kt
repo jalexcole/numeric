@@ -13,16 +13,19 @@ open class ArrayND {
   constructor (ndArray: Array<Double>, shape: Array<Int>) {
     dataElements = ndArray
     this.shape = shape
+    size = dataElements.size
   }
   
   constructor(ndArray: Array<Double>) {
     dataElements = ndArray
     shape = arrayOf(ndArray.size)
+    size = dataElements.size
   }
   
   constructor(ndArray: ArrayList<Double>) {
     dataElements = ndArray.toTypedArray()
     shape = arrayOf(ndArray.size)
+    size = dataElements.size
   }
   
   operator fun get(vararg indices: Int): ArrayND {
@@ -42,6 +45,12 @@ open class ArrayND {
   operator fun set(indices: Array<Int>, value: Double) {
     val index = calculateIndex(indices)
     dataElements[index] = value
+  }
+  
+  @JvmName("getSize1")
+  fun getSize(): Int {
+    size = dataElements.size
+    return size
   }
   
   @JvmName("getShape1")
@@ -118,31 +127,34 @@ open class ArrayND {
   
   
   
-  private fun add(other: ArrayND): ArrayND {
-    val x = arrayListOf<Double>()
-    
-    if (shape.contentEquals(other.getShape())) {
-      for (i in 0 until size) {
-        x.add(dataElements[i] + other.dataElements[i])
-      }
-       return ArrayND(x.toTypedArray(), shape)
-      
-    } else if(isScalar()) {
-      for (i in 0 until other.size) {
-        x += dataElements.single() + other.dataElements[i]
-      }
-      return ArrayND(x.toTypedArray(), other.shape)
-      
-    } else if(other.isScalar()) {
-      for (i in 0 until size){
-        x.add(dataElements[i] + other.single())
-      }
-      return ArrayND(x.toTypedArray())
-    }
-    error("operator plus: nonconforming arguments")
-  }
   
-  operator fun plus(other: ArrayND) = add(other)
+  operator fun plus(other: ArrayND): ArrayND {
+    val x = arrayListOf<Double>()
+  
+    when {
+      shape.contentEquals(other.getShape()) -> {
+        for (i in 0 until dataElements.size) {
+          x.add(dataElements[i] + other.dataElements[i])
+        }
+        return ArrayND(x.toTypedArray(), shape)
+      }
+      
+      isScalar() -> {
+        for (i in 0 until other.size) {
+          x.add(dataElements.single() + other.dataElements[i])
+        }
+        return ArrayND(x.toTypedArray(), other.shape)
+      }
+      
+      other.isScalar() -> {
+        for (i in 0 until dataElements.size){
+          x.add(dataElements[i] + other.single())
+        }
+        return ArrayND(x.toTypedArray())
+      }
+      else -> error("operator plus: nonconforming arguments")
+    }
+  }
   
   operator fun plus(other: Double): ArrayND {
     val x = arrayListOf<Double>()
@@ -166,7 +178,7 @@ open class ArrayND {
     val x = arrayListOf<Double>()
   
     if (shape.contentEquals(other.shape)) {
-      for (i in 0 until size) {
+      for (i in 0 until dataElements.size) {
         x.add(dataElements[i] - other.dataElements[i])
       }
       return ArrayND(x.toTypedArray(), shape)
@@ -178,7 +190,7 @@ open class ArrayND {
       return ArrayND(x.toTypedArray(), other.shape)
     
     } else if(other.isScalar()) {
-      for (i in 0 until size){
+      for (i in 0 until dataElements.size){
         x.add(dataElements[i] - other.single())
       }
       return ArrayND(x.toTypedArray())
@@ -291,43 +303,44 @@ open class ArrayND {
   }
   
   open fun equals(other: ArrayND): Boolean {
-    return dataElements.contentEquals(other.dataElements) && shape.contentEquals(other.shape)
+    /**
+     * Compares two values with the n-dimensional array
+     */
+    return (dataElements.contentEquals(other.dataElements) && shape.contentEquals(other.shape))
   }
   
-  fun print() {
+  override fun toString(): String {
+    var content = ""
     when (shape.size) {
       1 -> {
-        print("[")
-        for (i in 0 until dataElements.size - 1) {
-          print("$i, ")
-        }
-        print("${dataElements[dataElements.size - 1]}]")
+        content = dataElements.contentToString()
       }
       2 -> {
-        print("[")
+        content.plus("[")
         for (column in 0 until shape[0]) {
-          if (column != 0) print(" ")
-          print("[")
+          if (column != 0) content.plus(" ")
+          content.plus("[")
           for (row in 0 until shape[1]) {
             val index = shape[0] * column + row
             print(dataElements[index])
-            if (row != shape[1] - 1) print(", ")
+            if (row != shape[1] - 1) content.plus(", ")
           }
-          print("]")
-          if (column != shape[0] - 1) print(",\n")
+          content.plus("]")
+          if (column != shape[0] - 1) content.plus(",\n")
         }
-        print("]")
+        content.plus("]")
       }
       3 -> {
       
       }
       0 -> {
-        print("[]")
+        content.plus("[]")
       }
       else -> {
         TODO("Make print work for all cases")
       }
     }
+    return content
   }
   
   fun toPolynomial(): Polynomial {
@@ -347,7 +360,7 @@ open class ArrayND {
   }
   
   fun isEmpty(): Boolean {
-    return (shape.size == 0)
+    return (shape.isEmpty())
   }
   
 }
@@ -359,9 +372,11 @@ fun ArrayND.sum(): ArrayND {
    * Takes the sum of every element in the array
    */
   var sum = 0.0
-  for (i in dataElements) {
-    sum += i
+  
+  repeat(dataElements.count()) {
+    sum += 1
   }
+  
   return ArrayND(arrayOf(sum))
 }
 
