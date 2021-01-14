@@ -174,6 +174,33 @@ open class ArrayND {
     return ArrayND(x.toTypedArray(), this.shape)
   }
   
+  operator fun plus(other: Short): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i + other)
+    }
+    
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun plus(other: Float): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i + other)
+    }
+    
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun plus(other: Long): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i + other)
+    }
+    
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
   operator fun minus(other: ArrayND): ArrayND {
     val x = arrayListOf<Double>()
   
@@ -215,6 +242,34 @@ open class ArrayND {
     return ArrayND(x.toTypedArray(), this.shape)
   }
   
+  operator fun minus(other: Float): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i - other)
+    }
+    
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun minus(other: Short): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i - other)
+    }
+    
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun minus(other: Long): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i - other)
+    }
+    
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  
   operator fun unaryMinus(): ArrayND {
     val x = arrayListOf<Double>()
     for (i in dataElements) {
@@ -231,6 +286,30 @@ open class ArrayND {
   }
   
   operator fun times(other: Int): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i * other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun times(other: Long): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i * other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun times(other: Short): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i * other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun times(other: Float): ArrayND {
     val x = arrayListOf<Double>()
     for (i in dataElements) {
       x.add(i * other)
@@ -263,6 +342,30 @@ open class ArrayND {
   }
   
   operator fun div(other: Double): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i / other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun div(other: Float): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i / other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun div(other: Long): ArrayND {
+    val x = arrayListOf<Double>()
+    for (i in dataElements) {
+      x.add(i / other)
+    }
+    return ArrayND(x.toTypedArray(), this.shape)
+  }
+  
+  operator fun div(other: Short): ArrayND {
     val x = arrayListOf<Double>()
     for (i in dataElements) {
       x.add(i / other)
