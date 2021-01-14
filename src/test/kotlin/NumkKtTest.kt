@@ -2,6 +2,7 @@ import arrayND.ArrayND
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import numeric.*
 
 internal class NumkKtTest {
   

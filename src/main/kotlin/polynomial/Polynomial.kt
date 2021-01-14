@@ -1,7 +1,6 @@
 package polynomial
 
 import arrayND.ArrayND
-import arrayNDOf
 import kotlin.math.pow
 
 
@@ -31,14 +30,15 @@ class Polynomial(ndArray: Array<Double>): ArrayND(ndArray) {
   }
   
   operator fun invoke(value: ArrayND): ArrayND {
-    if(value.isScalar())
+    if (value.isScalar())
       return ArrayND(arrayOf(polynomialResult(value.single())))
     else if (value.isVector()) {
       val data = arrayListOf<Double>()
-      for (i in 0 until value.size){
+      for (i in 0 until value.size) {
         data.add(polynomialResult(value[i].single()))
+        return numeric.arrayNDOf(data.toTypedArray())
       }
-      return arrayNDOf(data.toTypedArray())
+      
     }
     error("ParameterError: input value is not a scalar")
   }
