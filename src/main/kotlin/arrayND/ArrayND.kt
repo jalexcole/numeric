@@ -6,9 +6,9 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 open class ArrayND {
-  open var dataElements: Array<Double> = arrayOf()
+  var dataElements: Array<Double> = arrayOf()
   var shape: Array<Int> = arrayOf<Int>()
-  open var size: Int = dataElements.size
+  var size: Int
   
   constructor (ndArray: Array<Double>, shape: Array<Int>) {
     dataElements = ndArray
@@ -306,7 +306,8 @@ open class ArrayND {
     /**
      * Compares two values with the n-dimensional array
      */
-    return (dataElements.contentEquals(other.dataElements) && shape.contentEquals(other.shape))
+    return (dataElements.contentEquals(other.dataElements)
+            && shape.contentEquals(other.shape))
   }
   
   override fun toString(): String {
@@ -362,39 +363,40 @@ open class ArrayND {
   fun isEmpty(): Boolean {
     return (shape.isEmpty())
   }
+  fun sum(): ArrayND {
+    /**
+     * Sum
+     *
+     * Takes the sum of every element in the array
+     */
+    var sum = 0.0
+    
+    repeat(dataElements.count()) {
+      sum += 1
+    }
+    
+    return ArrayND(arrayOf(sum))
+  }
+  
+  fun pow(value: Double): ArrayND {
+    val newList = arrayListOf<Double>()
+    val newShape = shape
+    for (i in 0 until dataElements.size) {
+      newList.add(dataElements[i].pow(value))
+    }
+    return ArrayND(newList.toTypedArray(), newShape)
+  }
+  
+  fun sqrt(): ArrayND {
+    val newList = arrayListOf<Double>()
+    val newShape = shape
+    for (i in dataElements) {
+      newList.add(sqrt(i))
+    }
+    return ArrayND(newList.toTypedArray(), newShape)
+  }
   
 }
 
-fun ArrayND.sum(): ArrayND {
-  /**
-   * Sum
-   *
-   * Takes the sum of every element in the array
-   */
-  var sum = 0.0
-  
-  repeat(dataElements.count()) {
-    sum += 1
-  }
-  
-  return ArrayND(arrayOf(sum))
-}
 
-fun ArrayND.pow(value: Double): ArrayND {
-  val newList = arrayListOf<Double>()
-  val newShape = shape
-  for (i in 0 until dataElements.size) {
-    newList.add(dataElements[i].pow(value))
-  }
-  return ArrayND(newList.toTypedArray(), newShape)
-}
-
-fun ArrayND.sqrt(): ArrayND {
-  val newList = arrayListOf<Double>()
-  val newShape = shape
-  for (i in dataElements) {
-    newList.add(sqrt(i))
-  }
-  return ArrayND(newList.toTypedArray(), newShape)
-}
 

@@ -4,6 +4,7 @@
 import arrayND.ArrayND
 import java.util.*
 import kotlin.*
+import kotlin.random.Random as Random
 
 fun aRangeOf(count: Int): ArrayND {
     val x: ArrayList<Double> = ArrayList()
@@ -34,8 +35,28 @@ fun linspace(start: Double, stop: Double, steps: Int=50): ArrayND {
     return ArrayND(linspaceArray.toTypedArray())
 }
 
-fun randomND(vararg args: Int) {
+fun randomND(vararg args: Int): ArrayND {
+    var count = 1
+    for (i in args) {
+        count *= i
+    }
+    
+    val randomArrayND = DoubleArray(count) { Random.nextDouble() }.asList()
+    return ArrayND(randomArrayND.toTypedArray(), args.toTypedArray())
+}
 
+fun randomND(values: Array<Int>): ArrayND {
+    var count: Int = 1
+    for (i in values) {
+        count *= i
+    }
+    
+    val randomArrayND = DoubleArray(count) { Random.nextDouble() }.asList()
+    return ArrayND(randomArrayND.toTypedArray(), values)
+}
+
+fun dotProduct(a: ArrayND, b: ArrayND): ArrayND {
+    return (a * b).sum()
 }
 
 fun zeros(size: Int): ArrayND {
