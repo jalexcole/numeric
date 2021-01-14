@@ -4,7 +4,6 @@ import arrayND.ArrayND
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
-import numeric.*
 
 internal class numericTest {
   
@@ -28,21 +27,32 @@ internal class numericTest {
   
   @Test
   fun linspace() {
+    val expected = arrayNDOf(0.0, 1.0, 2.0, 3.0, 4.0)
+    val actual = linspace(0.0, 4.0, 5)
+    
+    assertTrue(expected.equals(actual))
   }
   
   @Test
   fun randomND() {
-  }
-  
-  @Test
-  fun testRandomND() {
+    // Need to learn how to test this value
+    assertTrue(true)
   }
   
   @Test
   fun dotProduct() {
+    val expected = 14.0
+    val test = arrayNDOf(1.0, 2.0, 3.0)
+    val actual = dotProduct(test, test).single()
+    println(actual)
+    assertTrue(expected.equals(actual))
   }
   
   @Test
   fun zeros() {
+    val expected = arrayNDOf(0.0, 0.0, 0.0)
+    val actual = zeros(3)
+    
+    assertTrue(expected.equals(actual))
   }
 }
