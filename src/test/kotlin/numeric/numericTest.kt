@@ -36,6 +36,7 @@ internal class numericTest {
   @Test
   fun randomND() {
     // Need to learn how to test this value
+    val x = randomND(10)
     assertTrue(true)
   }
   
