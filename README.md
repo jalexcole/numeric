@@ -9,7 +9,7 @@ repositories {
         maven { url "https://jitpack.io" }
    }
    dependencies {
-         implementation 'com.github.jitpack:numeric:master'
+         implementation 'com.github.jalexcole:numeric:0.0.1'
    }
 ```
  
