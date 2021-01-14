@@ -1,7 +1,7 @@
 //import java.util.*
-import kotlin.system.measureNanoTime
+import numeric.*
 import kotlin.system.measureTimeMillis
-import kotlin.time.microseconds
+
 fun main(){
   simpleBenchmark()
 }
