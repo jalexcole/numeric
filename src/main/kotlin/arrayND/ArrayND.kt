@@ -371,8 +371,8 @@ open class ArrayND {
      */
     var sum = 0.0
     
-    repeat(dataElements.count()) {
-      sum += 1
+    for (i in dataElements) {
+      sum += i
     }
     
     return ArrayND(arrayOf(sum))
