@@ -12,7 +12,7 @@ internal class numericTest {
     val test = arrayOf(0.0, 1.0, 2.0, 3.0, 4.0)
     val actual = aRangeOf(5)
     
-    assertTrue(test.contentEquals(actual.dataElements))
+    assertTrue(test.contentEquals(actual.elements))
   }
   
   @Test

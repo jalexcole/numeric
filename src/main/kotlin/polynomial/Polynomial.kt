@@ -10,17 +10,28 @@ import kotlin.math.pow
 class Polynomial(ndArray: Array<Double>): ArrayND(ndArray) {
 
   private fun polynomialResult(value: Double): Double {
-    var sum: Double = 0.0
+    var sum = 0.0
     for (i in 0 until size) {
-      sum += dataElements[i] * value.pow(i.toDouble())
+      sum += elements[i] * value.pow(i.toDouble())
     }
     return sum
+  }
+  
+  fun integrate(constant: Double = 0.0): Polynomial {
+    var output = arrayListOf<Double>()
+    
+    output.add(constant)
+    for (i in 1 until elements.size + 1) {
+      output.add(elements[i - 1] / i)
+    }
+    
+    return ArrayND(output).toPolynomial()
   }
   
   fun derivative(): ArrayND {
     val polyDerivative = arrayListOf<Double>()
     for (i in 1 until size) {
-      polyDerivative.add(dataElements[i] * i.toDouble())
+      polyDerivative.add(elements[i] * i.toDouble())
     }
     return ArrayND(polyDerivative.toTypedArray())
   }
@@ -43,6 +54,11 @@ class Polynomial(ndArray: Array<Double>): ArrayND(ndArray) {
     error("ParameterError: input value is not a scalar")
   }
   
-  fun toArrayND(): ArrayND = ArrayND(dataElements)
+  operator fun plus(other: Polynomial): Polynomial = polynomialAdd(this, other)
+  operator fun minus(other: Polynomial): Polynomial = polynomialSubtract(this,other)
+  operator fun times(other: Polynomial): Polynomial = polynomialMultiply(this, other)
+  operator fun div(other: Polynomial): Polynomial = polynomialDivide(this, other)
+  
+  fun toArrayND(): ArrayND = ArrayND(elements)
   
 }

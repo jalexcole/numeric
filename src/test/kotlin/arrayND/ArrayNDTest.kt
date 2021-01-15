@@ -29,24 +29,24 @@ internal class ArrayNDTest {
     val actualVector = arrayNDOf(1.0, 2.0, 3.0) + (arrayNDOf(1.0, 2.0, 3.0))
   
     val failMessageDouble = "Failure: ArrayND + Double " +
-            "\nExpected vector: ${expected.dataElements.contentToString()} received " +
-            "${actualDouble.dataElements.contentToString()}"
+            "\nExpected vector: ${expected.elements.contentToString()} received " +
+            "${actualDouble.elements.contentToString()}"
   
     val failMessageSingle = "Failure: ArrayND + ArrayND.single()" +
-            "\nExpected vector: ${expected.dataElements.contentToString()} received " +
-            "${actualSingle.dataElements.contentToString()}"
+            "\nExpected vector: ${expected.elements.contentToString()} received " +
+            "${actualSingle.elements.contentToString()}"
     
     val failMessageVector = "Failure: ArrayND + ArrayND" +
-            "\nExpected vector: ${expected.dataElements.contentToString()} received " +
-            "${actualVector.dataElements.contentToString()}"
+            "\nExpected vector: ${expected.elements.contentToString()} received " +
+            "${actualVector.elements.contentToString()}"
   
-    assertTrue(expected.dataElements.contentEquals(actualDouble.dataElements)
+    assertTrue(expected.elements.contentEquals(actualDouble.elements)
             && expected.shape.contentEquals(actualDouble.shape), failMessageDouble)
   
-    assertTrue(expected.dataElements.contentEquals(actualSingle.dataElements)
+    assertTrue(expected.elements.contentEquals(actualSingle.elements)
             && expected.shape.contentEquals(actualSingle.shape), failMessageSingle)
     
-    assertTrue(expected.dataElements.contentEquals(actualVector.dataElements)
+    assertTrue(expected.elements.contentEquals(actualVector.elements)
             && expected.shape.contentEquals(actualVector.shape), failMessageVector)
   }
   
@@ -101,10 +101,10 @@ internal class ArrayNDTest {
     val expected = arrayNDOf(0.0, 0.0, 0.0)
     val actual = arrayNDOf(1.0, 2.0, 3.0) - arrayNDOf(1.0, 2.0, 3.0)
   
-    val failMessage = "Expected vector: ${expected.dataElements.contentToString()} received " +
-            "${actual.dataElements.contentToString()}"
+    val failMessage = "Expected vector: ${expected.elements.contentToString()} received " +
+            "${actual.elements.contentToString()}"
   
-    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
+    assertTrue(expected.elements.contentEquals(actual.elements)
             && expected.shape.contentEquals(actual.shape), failMessage)
   }
   
@@ -114,10 +114,10 @@ internal class ArrayNDTest {
     val expected = arrayNDOf(2.0, 4.0, 6.0)
     val actual = -arrayNDOf(-2.0, -4.0, -6.0)
   
-    val failMessage = "Expected vector: ${expected.dataElements.contentToString()} received " +
-            "${actual.dataElements.contentToString()}"
+    val failMessage = "Expected vector: ${expected.elements.contentToString()} received " +
+            "${actual.elements.contentToString()}"
     
-    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
+    assertTrue(expected.elements.contentEquals(actual.elements)
             && expected.shape.contentEquals(actual.shape), failMessage)
   }
   
@@ -126,10 +126,10 @@ internal class ArrayNDTest {
     val expected = arrayNDOf(1.0, 4.0, 9.0)
     val actual = arrayNDOf(1.0, 2.0, 3.0) * arrayNDOf(1.0, 2.0, 3.0)
   
-    val failMessage = "Expected vector: ${expected.dataElements.contentToString()} received " +
-            "${actual.dataElements.contentToString()}"
+    val failMessage = "Expected vector: ${expected.elements.contentToString()} received " +
+            "${actual.elements.contentToString()}"
     
-    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
+    assertTrue(expected.elements.contentEquals(actual.elements)
             && expected.shape.contentEquals(actual.shape), failMessage)
   }
   
@@ -138,9 +138,9 @@ internal class ArrayNDTest {
   fun div() {
     val expected = arrayNDOf(1.0, 1.0, 1.0)
     val actual = arrayNDOf(1.0, 2.0, 3.0) / (arrayNDOf(1.0, 2.0, 3.0))
-    val failMessage = "Expected vector: ${expected.dataElements.contentToString()} received " +
-            "${actual.dataElements.contentToString()}"
-    assertTrue(expected.dataElements.contentEquals(actual.dataElements)
+    val failMessage = "Expected vector: ${expected.elements.contentToString()} received " +
+            "${actual.elements.contentToString()}"
+    assertTrue(expected.elements.contentEquals(actual.elements)
             && expected.shape.contentEquals(actual.shape), failMessage)
   }
   
@@ -158,8 +158,8 @@ internal class ArrayNDTest {
     var x = arrayNDOf(1.0, 2.0, 3.0).toPolynomial()
     val actual = x(2.0)
     val failMessage = "Fail: toPolynomial()" +
-            "\nExpected vector: ${expected.dataElements.contentToString()} received " +
-            "${actual.dataElements.contentToString()}"
+            "\nExpected vector: ${expected.elements.contentToString()} received " +
+            "${actual.elements.contentToString()}"
     
     assertTrue(expected.equals(actual), failMessage)
     // assertEquals(expected, x(2.0))
