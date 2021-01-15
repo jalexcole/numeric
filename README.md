@@ -2,6 +2,8 @@
 Numeric is a numpy replica done in kotlin. At the moment the goal is to add as many features for vector operations without consern for optimazitions. 
 
 ## Getting Started
+The main functions of this library are held in the numeric.numeric package. 
+
 Gradle Dependency
 ```
 repositories {
