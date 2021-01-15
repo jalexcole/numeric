@@ -403,7 +403,7 @@ open class ArrayND {
     error("operator /: nonconforming arguments")
   }
   
-  open fun equals(other: ArrayND): Boolean {
+  fun equals(other: ArrayND): Boolean {
     /**
      * Compares two values with the n-dimensional array
      */
