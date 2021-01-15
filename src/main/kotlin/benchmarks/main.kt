@@ -9,8 +9,9 @@ fun main(){
 fun simpleBenchmark(){
   val a = randomND(16000)
   val b = randomND(16000)
+  var x = ""
   val tic = measureTimeMillis {
-    val x = dotProduct(a, b)
+     x = dotProduct(a, b).toString()
   }
-  println("Dot product takes ${tic} milli-seconds")
+  println("Dot product $x takes ${tic} milli-seconds")
 }

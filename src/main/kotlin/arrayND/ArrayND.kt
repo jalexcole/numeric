@@ -1,57 +1,57 @@
 package arrayND
 
 import polynomial.Polynomial
-import java.util.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 open class ArrayND {
-  var dataElements: Array<Double> = arrayOf()
+  var elements: Array<Double> = arrayOf()
   var shape: Array<Int> = arrayOf<Int>()
   var size: Int
   
   constructor (ndArray: Array<Double>, shape: Array<Int>) {
-    dataElements = ndArray
+    elements = ndArray
     this.shape = shape
-    size = dataElements.size
+    size = elements.size
   }
   
   constructor(ndArray: Array<Double>) {
-    dataElements = ndArray
+    elements = ndArray
     shape = arrayOf(ndArray.size)
-    size = dataElements.size
+    size = elements.size
   }
   
   constructor(ndArray: ArrayList<Double>) {
-    dataElements = ndArray.toTypedArray()
+    elements = ndArray.toTypedArray()
     shape = arrayOf(ndArray.size)
-    size = dataElements.size
+    size = elements.size
   }
   
   operator fun get(vararg indices: Int): ArrayND {
     val index = calculateIndex(indices.toTypedArray())
-    return ArrayND(arrayOf(dataElements[index]))
+    return ArrayND(arrayOf(elements[index]))
   }
   operator fun get(indices: Array<Int>): ArrayND {
     val index = calculateIndex(indices)
-    return ArrayND(arrayOf(dataElements[index]))
+    return ArrayND(arrayOf(elements[index]))
   }
   
   operator fun set(vararg indices: Int, value: Double) {
     val index = calculateIndex(indices.toTypedArray())
-    dataElements[index] = value
+    elements[index] = value
   }
   
   operator fun set(indices: Array<Int>, value: Double) {
     val index = calculateIndex(indices)
-    dataElements[index] = value
+    elements[index] = value
   }
   
   @JvmName("getSize1")
   fun getSize(): Int {
-    size = dataElements.size
+    size = elements.size
     return size
   }
+  
   
   @JvmName("getShape1")
   fun getShape(): Array<Int> {
@@ -95,21 +95,19 @@ open class ArrayND {
       else -> return -1
     }
     return -1
-    
-    
   }
   
-  fun single() = dataElements.single()
+  fun single() = elements.single()
   
   fun reshape(newShape: Array<Int>): ArrayND {
     var count = 1
     for (i in newShape) {
       count *= i
     }
-    if (count == dataElements.size) {
-      return ArrayND(dataElements, newShape)
+    if (count == elements.size) {
+      return ArrayND(elements, newShape)
     } else {
-      error("ValueError: cannot reshape array of size ${dataElements.size} into shape ${Arrays.toString(shape)}")
+      error("ValueError: cannot reshape array of size ${elements.size} into shape ${shape.contentDeepToString()}")
     }
   }
   
@@ -118,10 +116,10 @@ open class ArrayND {
     for (i in newShape) {
       count *= i
     }
-    if (count == dataElements.size) {
-      return ArrayND(dataElements, newShape.toTypedArray())
+    if (count == elements.size) {
+      return ArrayND(elements, newShape.toTypedArray())
     } else {
-      error("ValueError: cannot reshape array of size ${dataElements.size} into shape ${Arrays.toString(shape)}")
+      error("ValueError: cannot reshape array of size ${elements.size} into shape ${shape.contentDeepToString()}")
     }
   }
   
@@ -133,22 +131,22 @@ open class ArrayND {
   
     when {
       shape.contentEquals(other.getShape()) -> {
-        for (i in 0 until dataElements.size) {
-          x.add(dataElements[i] + other.dataElements[i])
+        for (i in 0 until elements.size) {
+          x.add(elements[i] + other.elements[i])
         }
         return ArrayND(x.toTypedArray(), shape)
       }
       
       isScalar() -> {
         for (i in 0 until other.size) {
-          x.add(dataElements.single() + other.dataElements[i])
+          x.add(elements.single() + other.elements[i])
         }
         return ArrayND(x.toTypedArray(), other.shape)
       }
       
       other.isScalar() -> {
-        for (i in 0 until dataElements.size){
-          x.add(dataElements[i] + other.single())
+        for (i in 0 until elements.size){
+          x.add(elements[i] + other.single())
         }
         return ArrayND(x.toTypedArray())
       }
@@ -158,7 +156,7 @@ open class ArrayND {
   
   operator fun plus(other: Double): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i + other)
     }
     
@@ -167,7 +165,7 @@ open class ArrayND {
   
   operator fun plus(other: Int): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i + other)
     }
     
@@ -176,7 +174,7 @@ open class ArrayND {
   
   operator fun plus(other: Short): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i + other)
     }
     
@@ -185,7 +183,7 @@ open class ArrayND {
   
   operator fun plus(other: Float): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i + other)
     }
     
@@ -194,7 +192,7 @@ open class ArrayND {
   
   operator fun plus(other: Long): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i + other)
     }
     
@@ -205,20 +203,20 @@ open class ArrayND {
     val x = arrayListOf<Double>()
   
     if (shape.contentEquals(other.shape)) {
-      for (i in 0 until dataElements.size) {
-        x.add(dataElements[i] - other.dataElements[i])
+      for (i in 0 until elements.size) {
+        x.add(elements[i] - other.elements[i])
       }
       return ArrayND(x.toTypedArray(), shape)
     
     } else if(isScalar()) {
       for (i in 0 until other.size) {
-        x += dataElements.single() - other.dataElements[i]
+        x += elements.single() - other.elements[i]
       }
       return ArrayND(x.toTypedArray(), other.shape)
     
     } else if(other.isScalar()) {
-      for (i in 0 until dataElements.size){
-        x.add(dataElements[i] - other.single())
+      for (i in 0 until elements.size){
+        x.add(elements[i] - other.single())
       }
       return ArrayND(x.toTypedArray())
     }
@@ -226,7 +224,7 @@ open class ArrayND {
   }
   operator fun minus(other: Int): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i - other)
     }
     
@@ -235,7 +233,7 @@ open class ArrayND {
   
   operator fun minus(other: Double): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i - other)
     }
   
@@ -244,7 +242,7 @@ open class ArrayND {
   
   operator fun minus(other: Float): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i - other)
     }
     
@@ -253,7 +251,7 @@ open class ArrayND {
   
   operator fun minus(other: Short): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i - other)
     }
     
@@ -262,7 +260,7 @@ open class ArrayND {
   
   operator fun minus(other: Long): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i - other)
     }
     
@@ -272,14 +270,14 @@ open class ArrayND {
   
   operator fun unaryMinus(): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i * -1)
     }
     return ArrayND(x.toTypedArray(), this.shape)
   }
   operator fun times(other: Double): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i * other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -287,7 +285,7 @@ open class ArrayND {
   
   operator fun times(other: Int): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i * other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -295,7 +293,7 @@ open class ArrayND {
   
   operator fun times(other: Long): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i * other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -303,7 +301,7 @@ open class ArrayND {
   
   operator fun times(other: Short): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i * other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -311,7 +309,7 @@ open class ArrayND {
   
   operator fun times(other: Float): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i * other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -322,19 +320,19 @@ open class ArrayND {
   
     if (shape.contentEquals(other.getShape())) {
       for (i in 0 until size) {
-        x.add(dataElements[i] * other.dataElements[i])
+        x.add(elements[i] * other.elements[i])
       }
       return ArrayND(x.toTypedArray(), shape)
     
     } else if(isScalar()) {
       for (i in 0 until other.size) {
-        x += dataElements.single() * other.dataElements[i]
+        x += elements.single() * other.elements[i]
       }
       return ArrayND(x.toTypedArray(), other.shape)
     
     } else if(other.isScalar()) {
       for (i in 0 until size){
-        x.add(dataElements[i] * other.single())
+        x.add(elements[i] * other.single())
       }
       return ArrayND(x.toTypedArray())
     }
@@ -343,7 +341,7 @@ open class ArrayND {
   
   operator fun div(other: Double): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i / other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -351,7 +349,7 @@ open class ArrayND {
   
   operator fun div(other: Float): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i / other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -359,7 +357,7 @@ open class ArrayND {
   
   operator fun div(other: Long): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i / other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -367,7 +365,7 @@ open class ArrayND {
   
   operator fun div(other: Short): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i / other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -375,7 +373,7 @@ open class ArrayND {
   
   operator  fun div(other: Int): ArrayND {
     val x = arrayListOf<Double>()
-    for (i in dataElements) {
+    for (i in elements) {
       x.add(i / other)
     }
     return ArrayND(x.toTypedArray(), this.shape)
@@ -386,19 +384,19 @@ open class ArrayND {
   
     if (shape.contentEquals(other.getShape())) {
       for (i in 0 until size) {
-        x.add(dataElements[i] / other.dataElements[i])
+        x.add(elements[i] / other.elements[i])
       }
       return ArrayND(x.toTypedArray(), shape)
     
     } else if(isScalar()) {
       for (i in 0 until other.size) {
-        x += dataElements.single() / other.dataElements[i]
+        x += elements.single() / other.elements[i]
       }
       return ArrayND(x.toTypedArray(), other.shape)
     
     } else if(other.isScalar()) {
       for (i in 0 until size){
-        x.add(dataElements[i] / other.single())
+        x.add(elements[i] / other.single())
       }
       return ArrayND(x.toTypedArray())
     }
@@ -409,7 +407,7 @@ open class ArrayND {
     /**
      * Compares two values with the n-dimensional array
      */
-    return (dataElements.contentEquals(other.dataElements)
+    return (elements.contentEquals(other.elements)
             && shape.contentEquals(other.shape))
   }
   
@@ -417,7 +415,7 @@ open class ArrayND {
     var content = ""
     when (shape.size) {
       1 -> {
-        content = dataElements.contentToString()
+        content = elements.contentToString()
       }
       2 -> {
         content.plus("[")
@@ -426,7 +424,7 @@ open class ArrayND {
           content.plus("[")
           for (row in 0 until shape[1]) {
             val index = shape[0] * column + row
-            print(dataElements[index])
+            print(elements[index])
             if (row != shape[1] - 1) content.plus(", ")
           }
           content.plus("]")
@@ -448,7 +446,7 @@ open class ArrayND {
   }
   
   fun toPolynomial(): Polynomial {
-    if (shape.size == 1) return Polynomial(dataElements)
+    if (shape.size == 1) return Polynomial(elements)
     error("ShapeError: Array is a ${shape.size} dimension array")
   }
   
@@ -474,7 +472,7 @@ open class ArrayND {
      */
     var sum = 0.0
     
-    for (i in dataElements) {
+    for (i in elements) {
       sum += i
     }
     
@@ -484,8 +482,8 @@ open class ArrayND {
   fun pow(value: Double): ArrayND {
     val newList = arrayListOf<Double>()
     val newShape = shape
-    for (i in 0 until dataElements.size) {
-      newList.add(dataElements[i].pow(value))
+    for (i in 0 until elements.size) {
+      newList.add(elements[i].pow(value))
     }
     return ArrayND(newList.toTypedArray(), newShape)
   }
@@ -493,7 +491,7 @@ open class ArrayND {
   fun sqrt(): ArrayND {
     val newList = arrayListOf<Double>()
     val newShape = shape
-    for (i in dataElements) {
+    for (i in elements) {
       newList.add(sqrt(i))
     }
     return ArrayND(newList.toTypedArray(), newShape)
