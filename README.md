@@ -4,6 +4,15 @@ Numeric is a numpy replica done in kotlin. At the moment the goal is to add as m
 ## Getting Started
 The main functions of this library are held in the numeric.numeric package. 
 
+Example:
+```
+val nk = numeric // the main api object
+
+
+val x = linspace(0.0, 1.0) 
+val y = x * 3
+println(y.toString()
+```
 Gradle Dependency
 ```
 repositories {
