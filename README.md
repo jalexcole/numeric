@@ -36,3 +36,4 @@ Incorporate into Numerical Methods.
 
 ### Later Goals
 Incorporate JEP 338 into a jvm section for further optimization.
+Move to kotlin multiplatform
