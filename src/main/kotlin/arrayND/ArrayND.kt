@@ -7,24 +7,15 @@ import kotlin.math.sqrt
 open class ArrayND {
   var elements: Array<Double> = arrayOf()
   var shape: Array<Int> = arrayOf<Int>()
-  var size: Int
   
   constructor (ndArray: Array<Double>, shape: Array<Int>) {
     elements = ndArray
     this.shape = shape
-    size = elements.size
   }
   
   constructor(ndArray: Array<Double>) {
     elements = ndArray
     shape = arrayOf(ndArray.size)
-    size = elements.size
-  }
-  
-  constructor(ndArray: ArrayList<Double>) {
-    elements = ndArray.toTypedArray()
-    shape = arrayOf(ndArray.size)
-    size = elements.size
   }
   
   operator fun get(vararg indices: Int): ArrayND {
@@ -48,7 +39,7 @@ open class ArrayND {
   
   @JvmName("getSize1")
   fun getSize(): Int {
-    size = elements.size
+    val size = elements.size
     return size
   }
   
@@ -138,7 +129,7 @@ open class ArrayND {
       }
       
       isScalar() -> {
-        for (i in 0 until other.size) {
+        for (i in 0 until other.getSize()) {
           x.add(elements.single() + other.elements[i])
         }
         return ArrayND(x.toTypedArray(), other.shape)
@@ -209,7 +200,7 @@ open class ArrayND {
       return ArrayND(x.toTypedArray(), shape)
     
     } else if(isScalar()) {
-      for (i in 0 until other.size) {
+      for (i in 0 until other.getSize()) {
         x += elements.single() - other.elements[i]
       }
       return ArrayND(x.toTypedArray(), other.shape)
@@ -319,19 +310,19 @@ open class ArrayND {
     val x = arrayListOf<Double>()
   
     if (shape.contentEquals(other.getShape())) {
-      for (i in 0 until size) {
+      for (i in 0 until getSize()) {
         x.add(elements[i] * other.elements[i])
       }
       return ArrayND(x.toTypedArray(), shape)
     
     } else if(isScalar()) {
-      for (i in 0 until other.size) {
+      for (i in 0 until other.getSize()) {
         x += elements.single() * other.elements[i]
       }
       return ArrayND(x.toTypedArray(), other.shape)
     
     } else if(other.isScalar()) {
-      for (i in 0 until size){
+      for (i in 0 until getSize()){
         x.add(elements[i] * other.single())
       }
       return ArrayND(x.toTypedArray())
@@ -383,19 +374,19 @@ open class ArrayND {
     val x = arrayListOf<Double>()
   
     if (shape.contentEquals(other.getShape())) {
-      for (i in 0 until size) {
+      for (i in 0 until getSize()) {
         x.add(elements[i] / other.elements[i])
       }
       return ArrayND(x.toTypedArray(), shape)
     
     } else if(isScalar()) {
-      for (i in 0 until other.size) {
+      for (i in 0 until other.getSize()) {
         x += elements.single() / other.elements[i]
       }
       return ArrayND(x.toTypedArray(), other.shape)
     
     } else if(other.isScalar()) {
-      for (i in 0 until size){
+      for (i in 0 until getSize()){
         x.add(elements[i] / other.single())
       }
       return ArrayND(x.toTypedArray())
@@ -403,7 +394,7 @@ open class ArrayND {
     error("operator /: nonconforming arguments")
   }
   
-  open fun equals(other: ArrayND): Boolean {
+  fun equals(other: ArrayND): Boolean {
     /**
      * Compares two values with the n-dimensional array
      */
@@ -462,7 +453,7 @@ open class ArrayND {
   }
   
   fun isEmpty(): Boolean {
-    return (shape.isEmpty())
+    return (elements.isEmpty())
   }
   fun sum(): ArrayND {
     /**

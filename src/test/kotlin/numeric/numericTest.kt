@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
 
-internal class numericTest {
-  
+class NumericTest {
+  val nm = numeric
   @Test
   fun aRangeOf() {
-    val test = arrayOf(0.0, 1.0, 2.0, 3.0, 4.0)
-    val actual = aRangeOf(5)
+    val test = ArrayND(arrayOf(0.0, 1.0, 2.0, 3.0, 4.0))
+    val actual = nm.aRangeOf(5)
     
-    assertTrue(test.contentEquals(actual.elements))
+    assertTrue(test.equals(actual))
   }
   
   @Test
@@ -20,15 +20,15 @@ internal class numericTest {
     val testValues = arrayOf(1.0, 2.0, 3.0)
     val expected = ArrayND(testValues)
     
-    val actual = arrayNDOf(testValues)
+    val actual = nm.arrayNDOf(testValues)
     
     assertTrue(expected.equals(actual))
   }
   
   @Test
   fun linspace() {
-    val expected = arrayNDOf(0.0, 1.0, 2.0, 3.0, 4.0)
-    val actual = linspace(0.0, 4.0, 5)
+    val expected = nm.arrayNDOf(0.0, 1.0, 2.0, 3.0, 4.0)
+    val actual = nm.linspace(0.0, 4.0, 5)
     
     assertTrue(expected.equals(actual))
   }
@@ -36,23 +36,23 @@ internal class numericTest {
   @Test
   fun randomND() {
     // Need to learn how to test this value
-    val x = randomND(10)
+    val x = nm.randomND(10)
     assertTrue(true)
   }
   
   @Test
   fun dotProduct() {
     val expected = 14.0
-    val test = arrayNDOf(1.0, 2.0, 3.0)
-    val actual = dotProduct(test, test).single()
+    val test = nm.arrayNDOf(1.0, 2.0, 3.0)
+    val actual = nm.dotProduct(test, test).single()
     println(actual)
     assertTrue(expected.equals(actual))
   }
   
   @Test
   fun zeros() {
-    val expected = arrayNDOf(0.0, 0.0, 0.0)
-    val actual = zeros(3)
+    val expected = nm.arrayNDOf(0.0, 0.0, 0.0)
+    val actual = nm.zeros(3)
     
     assertTrue(expected.equals(actual))
   }

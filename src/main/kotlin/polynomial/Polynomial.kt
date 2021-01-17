@@ -11,7 +11,7 @@ class Polynomial(ndArray: Array<Double>): ArrayND(ndArray) {
 
   private fun polynomialResult(value: Double): Double {
     var sum = 0.0
-    for (i in 0 until size) {
+    for (i in 0 until getSize()) {
       sum += elements[i] * value.pow(i.toDouble())
     }
     return sum
@@ -25,12 +25,12 @@ class Polynomial(ndArray: Array<Double>): ArrayND(ndArray) {
       output.add(elements[i - 1] / i)
     }
     
-    return ArrayND(output).toPolynomial()
+    return ArrayND(output.toTypedArray()).toPolynomial()
   }
   
   fun derivative(): ArrayND {
     val polyDerivative = arrayListOf<Double>()
-    for (i in 1 until size) {
+    for (i in 1 until getSize()) {
       polyDerivative.add(elements[i] * i.toDouble())
     }
     return ArrayND(polyDerivative.toTypedArray())
@@ -45,9 +45,9 @@ class Polynomial(ndArray: Array<Double>): ArrayND(ndArray) {
       return ArrayND(arrayOf(polynomialResult(value.single())))
     else if (value.isVector()) {
       val data = arrayListOf<Double>()
-      for (i in 0 until value.size) {
+      for (i in 0 until value.getSize()) {
         data.add(polynomialResult(value[i].single()))
-        return numeric.arrayNDOf(data.toTypedArray())
+        return ArrayND(data.toTypedArray())
       }
       
     }
