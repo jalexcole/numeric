@@ -13,6 +13,9 @@ val x = nk.linspace(0.0, 1.0) // creates an array from 0.0 to 1.0 with a size of
 val y = x * 3 // multiplying all x array elements by 3
 println(y.toString()) 
 ```
+
+For more information visit the wiki https://github.com/jalexcole/numeric/wiki
+
 Gradle Dependency
 ```groovy
 repositories {
