@@ -5,16 +5,16 @@ Numeric is a numpy replica done in kotlin. At the moment the goal is to add as m
 The main functions of this library are held in the numeric.numeric package. 
 
 Example:
-```
+```kotlin
+
 val nk = numeric // the main api object
 
-
-val x = linspace(0.0, 1.0) 
-val y = x * 3
-println(y.toString()
+val x = nk.linspace(0.0, 1.0) // creates an array from 0.0 to 1.0 with a size of 50
+val y = x * 3 // multiplying all x array elements by 3
+println(y.toString()) 
 ```
 Gradle Dependency
-```
+```groovy
 repositories {
         jcenter()
         maven { url "https://jitpack.io" }
