@@ -11,7 +11,7 @@ object numeric {
     for (i in 0 until count) {
       x.add(i.toDouble())
     }
-    return ArrayND(x)
+    return ArrayND(x.toTypedArray())
   }
   
   fun arrayNDOf(vararg array: Double): ArrayND {
