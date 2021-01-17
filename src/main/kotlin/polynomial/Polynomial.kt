@@ -47,7 +47,7 @@ class Polynomial(ndArray: Array<Double>): ArrayND(ndArray) {
       val data = arrayListOf<Double>()
       for (i in 0 until value.size) {
         data.add(polynomialResult(value[i].single()))
-        return numeric.arrayNDOf(data.toTypedArray())
+        return ArrayND(data.toTypedArray())
       }
       
     }

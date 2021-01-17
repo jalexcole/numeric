@@ -27,6 +27,8 @@ open class ArrayND {
     size = elements.size
   }
   
+  
+  
   operator fun get(vararg indices: Int): ArrayND {
     val index = calculateIndex(indices.toTypedArray())
     return ArrayND(arrayOf(elements[index]))
@@ -462,7 +464,7 @@ open class ArrayND {
   }
   
   fun isEmpty(): Boolean {
-    return (shape.isEmpty())
+    return (elements.isEmpty())
   }
   fun sum(): ArrayND {
     /**
